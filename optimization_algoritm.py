@@ -2,7 +2,9 @@ def optimize1(Y, P, fn, eps=0.01, ):
     S = 0.1
     d = lambda x, y: abs(x - y)
     z = 1  # last is increment
+    c = 0
     while d(fn(P), Y) > eps:
+        c += 1
         a, b = P + S, P - S
         if d(fn(a), Y) < d(fn(b), Y):
             P = a
@@ -15,7 +17,11 @@ def optimize1(Y, P, fn, eps=0.01, ):
                 z = -1
                 S /= 2
 
-    return round(P, 3)
+    return c, round(P, 3)
+
+
+def optimize2(Y, P, fn, eps=0.01, ):
+    pass
 
 
 if __name__ == '__main__':
@@ -27,10 +33,10 @@ if __name__ == '__main__':
     ]
 
     for fn in function_list:
-        result = optimize(
+        iterations, result = optimize1(
             Y=61,
             P=2,
             fn=fn
         )
 
-        print(result, fn(result))
+        print(iterations, result, fn(result))
