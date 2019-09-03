@@ -27,7 +27,7 @@ def optimize2(Y, P, fn, eps=0.01, ):
     S = 100
     c = 0
     old_distance = 10000
-    STEP = 100
+    STEP = 2
 
     progress = True
     while d(fn(P), Y) > eps and progress:
@@ -36,8 +36,7 @@ def optimize2(Y, P, fn, eps=0.01, ):
         current_distance = d(fn(P), Y)
 
         if current_distance > old_distance:
-            S = -STEP
-            STEP /= c
+            S /= -STEP
 
         progress = d(old_distance, current_distance)
         old_distance = current_distance
