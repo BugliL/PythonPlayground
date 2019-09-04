@@ -58,7 +58,6 @@ def search_interval_zero(P, fn):
         Y0, Y1 = fn(x0), fn(x1)
         V0, V1 = sorted((Y0, Y1))
 
-        # print("(x0, x1) = ", (x0, x1))
     return c, sorted((x0, x1))
 
 
