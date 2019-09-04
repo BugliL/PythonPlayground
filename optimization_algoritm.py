@@ -66,12 +66,11 @@ def secants(Y, P, fn, eps=0.01, ):
     d = lambda x, y: abs(x - y)
     fn_ = lambda x: Y - fn(x)
 
-    value = P * 0.1
-    x0, x1 = P - value, P + value
+    c1, (x0, x1) = search_interval_zero(P, fn_)
     x = x0
     den = (fn_(x1) - fn_(x0))
-    c = 0
 
+    c = 0
     while d(fn_(x), Y) >= eps and abs(den) > eps:  # and is_iterating(x, x1):
         x = x1 - fn_(x1) * (x1 - x0) / den
         x0, x1 = x1, x
@@ -79,15 +78,16 @@ def secants(Y, P, fn, eps=0.01, ):
         c += 1
         den = (fn_(x1) - fn_(x0))
 
-    return c, round(x, 3)
+    return "{}+{}".format(c1, c), round(x, 3)
 
 
 def bisection_method(Y, P, fn, eps=0.01, ):
     fn_ = lambda x: Y - fn(x)
     sign = lambda x: math.copysign(1, x)
     d = lambda x, y: abs(x - y)
-    c, (a, b) = search_interval_zero(P, fn_)
+    c1, (a, b) = search_interval_zero(P, fn_)
 
+    c = 0
     x = a + b / 2
     while d(fn_(x), Y) >= eps and d(a, b) > eps:
         c += 1
@@ -95,7 +95,7 @@ def bisection_method(Y, P, fn, eps=0.01, ):
         a, b = (x, b) if sign(fn_(x)) == sign(fn_(a)) else (a, x)
         # print(locals())
 
-    return c, round(x, 3)
+    return "{}+{}".format(c1, c), round(x, 3)
 
 
 if __name__ == '__main__':
